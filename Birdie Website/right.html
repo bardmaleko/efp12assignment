@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question</title>
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <script>
+        function validateAnswer() {
+            var answer = document.getElementById('answer').value.trim();
+            // Normalize the input to lower case for comparison
+            answer = answer.toLowerCase();
+
+            if (answer === 'gibsons' || answer === 'gibsons, bc' || answer === 'gibsons, british columbia') {
+                // Redirect to next.html if the answer is correct
+                window.location.href = 'next.html';
+            } else {
+                // Alert the user and reload the page if the answer is incorrect
+                alert('Your answer is wrong, try again.');
+                window.location.reload();
+            }
+        }
+    </script>
+</head>
+<body>
+    <h>You're right </h>
+<p>Nikawi: Mother <br>Maggie is Bernice's mother.</p>
+  
+    <h1>Search the web to see where 'The Beachcombers' were filmed, write the city's name.</h1>
+    <input type="text" id="answer" placeholder="Type your answer here">
+    <button onclick="validateAnswer()">Submit</button>
+</body>
+</html>

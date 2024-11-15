@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Match Indigenous Facts</title>
+<h1>Matching headings</h1>
+<style>
+  h1 {
+    text-align: center;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+  }
+  .list {
+    list-style-type: none;
+    padding: 0;
+    width: 45%;
+  }
+  .list li {
+    margin: 10px;
+    background-color: #ed8566;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  #answers li {
+    background-color: rgb(223, 177, 132);
+  }
+  .correct {
+    text-decoration: line-through;
+    background-color: #98fb98; /* Light green to indicate correct */
+    pointer-events: none; /* Disable dragging and dropping for correct items */
+  }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+<div class="container">
+  <ul id="headings" class="list">
+    <li id="heading1">First Treaties</li>
+    <li id="heading2">Traditional Diets</li>
+    <li id="heading3">Sacred Animals</li>
+    <li id="heading4">Indigenous Languages</li>
+    <li id="heading5">Cultural Ceremonies</li>
+    <li id="heading6">Land Management</li>
+    <li id="heading7">Educational Systems</li>
+    <li id="heading8">Artistic Expressions</li>
+    <li id="heading9">Healing Practices</li>
+    <li id="heading10">Sport Origins</li>
+  </ul>
+  <ul id="answers" class="list">
+    <li id="answer6">Sustainable Practices Long Before Colonization</li>
+    <li id="answer4">Diverse, with Hundreds Still Spoken</li>
+    <li id="answer8">Range from Totem Poles to Intricate Beadwork</li>
+    <li id="answer2">Rooted in Local Flora and Fauna</li>
+    <li id="answer1">Cornerstones of Indigenous-Government Relations</li>
+    <li id="answer7">Oral Traditions and Practical Skills</li>
+    <li id="answer9">Use of Medicinal Plants and Rituals</li>
+    <li id="answer5">Include Sun Dance and Potlatch</li>
+    <li id="answer3">Often Embody Spirits of Ancestors</li>
+    <li id="answer10">Lacrosse Was Originally a Tribal Game</li>
+  </ul>
+  <button id="submitButton" style="margin-top: 20px;">Submit</button>
+</div>
+
+<script>
+  $(function() {
+    $("#headings li, #answers li").draggable({
+      helper: "clone"
+    });
+
+    $("#answers li").droppable({
+      accept: "#headings li",
+      drop: function(event, ui) {
+        var targetId = $(this).attr('id').replace('answer', '');
+        var sourceId = $(ui.draggable).attr('id').replace('heading', '');
+        if (targetId === sourceId) {
+          $(this).addClass("correct");
+          $(ui.draggable).addClass("correct");
+          var currentText = $(this).text();
+          $(this).html(currentText + " - Matched Correctly!");
+          checkCompletion();
+        } else {
+          var elem = $(this);
+          var originalText = elem.text();
+          elem.html("Try again!");
+          setTimeout(function() {
+            elem.html(originalText); // Reset to default text after 3 seconds
+          }, 3000);
+        }
+      }
+    });
+
+    $('#submitButton').click(function() {
+      if ($('#headings li.correct').length === 10) {
+        window.location.href = 'aftermatchh.html';
+      } else {
+        alert('Please match all items correctly before submitting.');
+      }
+    });
+  });
+
+  function checkCompletion() {
+    if ($('#headings li.correct').length === 10) {
+      $('#submitButton').prop('disabled', false);
+    }
+  }
+</script>
+
+</body>
+</html>

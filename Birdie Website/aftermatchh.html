@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Birdie Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 95%;
+            max-width: 600px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 5px 0;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .error-message {
+            color: red;
+            display: none;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <form id="birdieQuiz">
+            <!-- Questions will be dynamically added here -->
+            <button type="submit">Submit</button>
+            <div class="error-message" id="errorMessage"></div>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const questions = [
+            { question: "What element of nature does Bernice feel connected to?", answers: ["Water", "Fire", "Air", "Earth"], correct: "Earth" },
+            { question: "What kind of visions does Birdie experience?", answers: ["Nightmares", "Premonitions", "Daydreams", "Dreams"], correct: "Dreams" },
+            { question: "What is Bernice’s mother’s name in the novel?", answers: ["Marie", "Molly", "Maggie", "Mable"], correct: "Maggie" },
+            { question: "In which country is the story of 'Birdie' primarily set?", answers: ["USA", "Australia", "New Zealand", "Canada"], correct: "Canada" },
+            { question: "What type of store does Bernice work in?", answers: ["Grocery", "Boutique", "Bookstore", "Bakery"], correct: "Bakery" },
+            { question: "What is the main theme of the book?", answers: ["Romance", "Adventure", "Mystery", "Healing"], correct: "Healing" }
+        ];
+
+        $(function () {
+            const quizForm = $('#birdieQuiz');
+            questions.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question">
+                        <p>${q.question}</p>
+                        ${q.answers.map(answer => `<label><input type="radio" name="q${index}" value="${answer}"> ${answer}</label>`).join('')}
+                    </div>
+                `;
+                quizForm.prepend(questionHTML);
+            });
+
+            quizForm.submit(function (event) {
+                event.preventDefault();
+                let allCorrect = true;
+                questions.forEach((q, index) => {
+                    if ($(`input[name="q${index}"]:checked`).val() !== q.correct) {
+                        allCorrect = false;
+                    }
+                });
+
+                if (allCorrect) {
+                    window.location.href = 'anotherstep.html';
+                } else {
+                    $('#errorMessage').text('Try again').show().fadeOut(3000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
